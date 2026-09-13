@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  reddit-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reddit_opportunity_bot
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/dev.db
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - POLL_INTERVAL_SECONDS=20
+      - MIN_OPPORTUNITY_SCORE=70
+      - MIN_NOTIFICATION_SCORE=75
+    volumes:
+      - bot_data:/app/data
+
+volumes:
+  bot_data:

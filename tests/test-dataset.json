@@ -1,0 +1,74 @@
+[
+  {
+    "id": "t3_paid_001",
+    "subreddit": "forhire",
+    "title": "[Hiring] Need a full-stack Next.js and Tailwind developer to build an MVP for our startup",
+    "body": "We are looking to hire a web developer to build our SaaS MVP. Budget is $2,500. Needs Stripe integration, user auth, and dashboard. Timeline: ASAP within 3 weeks.",
+    "expectedOpportunity": true,
+    "expectedMinScore": 80,
+    "expectedIntent": "PAID"
+  },
+  {
+    "id": "t3_paid_002",
+    "subreddit": "smallbusiness",
+    "title": "Need a web developer to build a new Shopify ecommerce store for my clothing brand",
+    "body": "Launching a boutique clothing store next month. Need someone to set up Shopify, customize theme, and configure checkout and product catalog. Budget: $1000-$2000.",
+    "expectedOpportunity": true,
+    "expectedMinScore": 80,
+    "expectedIntent": "PAID"
+  },
+  {
+    "id": "t3_paid_003",
+    "subreddit": "freelance_forhire",
+    "title": "[Hiring] WordPress developer needed to redesign our local clinic website",
+    "body": "Our existing website is outdated. Need a clean WordPress redesign with booking form. Budget is $800.",
+    "expectedOpportunity": true,
+    "expectedMinScore": 75,
+    "expectedIntent": "PAID"
+  },
+  {
+    "id": "t3_free_001",
+    "subreddit": "SideProject",
+    "title": "Building an open-source nonprofit directory, looking for volunteer web developer",
+    "body": "This is an unpaid volunteer project for a nonprofit animal shelter. Looking for anyone wanting portfolio experience to build a simple React website.",
+    "expectedOpportunity": true,
+    "expectedMinScore": 60,
+    "expectedIntent": "FREE"
+  },
+  {
+    "id": "t3_equity_001",
+    "subreddit": "startups",
+    "title": "Looking for technical co-founder / web developer for AI fintech app (Equity only)",
+    "body": "I have the business plan and initial users. Looking for a web developer to partner up and build the web app for 20% equity share.",
+    "expectedOpportunity": true,
+    "expectedMinScore": 60,
+    "expectedIntent": "EQUITY"
+  },
+  {
+    "id": "t3_neg_forhire_001",
+    "subreddit": "forhire",
+    "title": "[For Hire] Full Stack Web Developer (React, Node, Python) - $30/hr",
+    "body": "Hello! I am a freelance web developer looking for work. Check out my portfolio at https://myportfolio.example. Available immediately for projects.",
+    "expectedOpportunity": false,
+    "expectedMinScore": 0,
+    "expectedIntent": "UNCLEAR"
+  },
+  {
+    "id": "t3_neg_tutorial_002",
+    "subreddit": "webdev",
+    "title": "How do I learn web development in 2026? Where to start?",
+    "body": "I am a complete beginner. Should I learn HTML/CSS first or jump straight into JavaScript and React? Any free tutorials or courses recommended?",
+    "expectedOpportunity": false,
+    "expectedMinScore": 0,
+    "expectedIntent": "UNCLEAR"
+  },
+  {
+    "id": "t3_neg_homework_003",
+    "subreddit": "webdev",
+    "title": "Student project homework help with flexbox CSS alignment",
+    "body": "Why is my navbar not centering? Here is my codepen link. This is for my university assignment due tomorrow.",
+    "expectedOpportunity": false,
+    "expectedMinScore": 0,
+    "expectedIntent": "UNCLEAR"
+  }
+]

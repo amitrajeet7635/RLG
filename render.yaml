@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: reddit-opportunity-bot
+    env: node
+    plan: free
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: file:./data/dev.db
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: POLL_INTERVAL_SECONDS
+        value: "20"
+      - key: MIN_OPPORTUNITY_SCORE
+        value: "70"
+      - key: MIN_NOTIFICATION_SCORE
+        value: "75"
+    disk:
+      name: bot-data
+      mountPath: /app/data
+      sizeGB: 1

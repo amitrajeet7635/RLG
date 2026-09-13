@@ -1,0 +1,90 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+model RedditPost {
+  id             String   @id @default(uuid())
+  redditPostId   String   @unique
+  subreddit      String
+  author         String
+  title          String
+  body           String
+  url            String
+  createdAtUtc   DateTime
+  fetchedAt      DateTime @default(now())
+  contentHash    String   @unique
+
+  @@index([subreddit])
+  @@index([createdAtUtc])
+}
+
+model Lead {
+  id               String   @id @default(uuid())
+  redditPostId     String   @unique
+  subreddit        String
+  author           String
+  title            String
+  body             String
+  url              String
+  createdAtUtc     DateTime
+  commercialIntent String   @default("UNCLEAR") // PAID, FREE, EQUITY, COLLABORATION, UNCLEAR
+  opportunityType  String   @default("WEBSITE_BUILD") // WEBSITE_BUILD, ECOMMERCE, WORDPRESS, etc.
+  score            Int      @default(0) // 0 - 100
+  budget           String?
+  currency         String?  @default("USD")
+  timeline         String?
+  summary          String?
+  requirements     String?  // JSON stringified array of requirements
+  technologies     String?  // JSON stringified array of technologies
+  outreachPitch    String?
+  aiConfidence     Float?   // 0.0 - 1.0
+  isAiAnalyzed     Boolean  @default(false)
+  status           String   @default("NEW") // NEW, REVIEWED, CONTACTED, REPLIED, CONVERTED, IGNORED, ARCHIVED
+  notes            String?
+  userFeedback     String?  // CORRECT, FALSE_POSITIVE, BAD_SCORE, GOOD_SCORE
+  notifiedAt       DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([subreddit])
+  @@index([score])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Subreddit {
+  id             String    @id @default(uuid())
+  name           String    @unique
+  enabled        Boolean   @default(true)
+  minScore       Int       @default(70)
+  description    String?
+  totalPosts     Int       @default(0)
+  qualifiedLeads Int       @default(0)
+  lastPolledAt   DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Setting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model SystemLog {
+  id        String   @id @default(uuid())
+  level     String   @default("INFO") // INFO, WARN, ERROR, SUCCESS
+  event     String   // POST_DETECTED, LEAD_QUALIFIED, NOTIFICATION_SENT, etc.
+  message   String
+  data      String?  // JSON stringified payload
+  createdAt DateTime @default(now())
+
+  @@index([event])
+  @@index([createdAt])
+}
