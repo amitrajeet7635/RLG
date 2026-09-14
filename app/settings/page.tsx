@@ -11,9 +11,23 @@ import {
   AlertCircle,
   Key,
   Sliders,
+  Bell,
+  BellRing,
+  Volume2,
+  VolumeX,
+  Sparkles,
 } from "lucide-react";
+import { useNotification } from "../components/NotificationProvider";
 
 export default function SettingsPage() {
+  const {
+    permission,
+    soundEnabled,
+    setSoundEnabled,
+    requestPermission,
+    sendTestNotification,
+  } = useNotification();
+
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -120,6 +134,97 @@ export default function SettingsPage() {
         <p className="text-slate-400 text-xs mt-0.5 sm:mt-1">
           Configure notification alerts, AI models, and autonomous poller parameters.
         </p>
+      </div>
+
+      {/* In-App & PWA Push Notifications */}
+      <div className="p-4 sm:p-6 rounded-2xl bg-[#0b101b] border border-blue-500/20 space-y-4 sm:space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-blue-500/15 text-blue-400 flex-shrink-0">
+              <BellRing className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-white flex items-center gap-2">
+                <span>In-App & Mobile PWA Notifications</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                  Real-Time
+                </span>
+              </h2>
+              <p className="text-xs text-slate-400">
+                Audible radar chime and interactive floating banners whenever high-scoring gigs appear.
+              </p>
+            </div>
+          </div>
+
+          <span
+            className={`text-xs font-semibold px-2.5 py-1 rounded-full border self-start sm:self-auto ${
+              permission === "granted"
+                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                : permission === "denied"
+                ? "bg-rose-500/10 text-rose-400 border-rose-500/30"
+                : "bg-amber-500/10 text-amber-400 border-amber-500/30"
+            }`}
+          >
+            {permission === "granted"
+              ? "Push Active"
+              : permission === "denied"
+              ? "Blocked in Browser"
+              : "Permission Required"}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-white/[0.04]">
+          {/* Action buttons */}
+          <div className="flex items-center gap-2">
+            {permission !== "granted" && (
+              <button
+                type="button"
+                onClick={requestPermission}
+                className="flex-1 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs rounded-xl shadow-sm transition min-h-[40px]"
+              >
+                Enable Device Push
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={sendTestNotification}
+              className="flex-1 px-4 py-2.5 bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 border border-white/[0.06] text-xs font-medium rounded-xl transition flex items-center justify-center gap-2 min-h-[40px]"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+              <span>Test Alert & Chime</span>
+            </button>
+          </div>
+
+          {/* Sound Toggle */}
+          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#070a10] border border-white/[0.06]">
+            <div className="flex items-center gap-2">
+              {soundEnabled ? (
+                <Volume2 className="w-4 h-4 text-blue-400" />
+              ) : (
+                <VolumeX className="w-4 h-4 text-slate-500" />
+              )}
+              <div>
+                <span className="text-xs font-medium text-slate-200 block">Radar Audio Chime</span>
+                <span className="text-[10px] text-slate-500">Play tone on qualified lead</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setSoundEnabled(!soundEnabled)}
+              className={`w-10 h-5 rounded-full transition-colors relative ${
+                soundEnabled ? "bg-blue-600" : "bg-slate-700"
+              }`}
+            >
+              <span
+                className={`w-4 h-4 rounded-full bg-white absolute top-0.5 transition-transform ${
+                  soundEnabled ? "right-0.5" : "left-0.5"
+                }`}
+              />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Telegram Alerts Setup */}

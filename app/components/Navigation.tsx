@@ -15,6 +15,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+import NotificationBell from "./NotificationBell";
+
 export default function Navigation() {
   const pathname = usePathname();
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -110,8 +112,12 @@ export default function Navigation() {
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
           {/* Brand */}
           <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 ring-1 ring-white/10 flex-shrink-0">
-              <Radar className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-pulse" />
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl overflow-hidden shadow-lg shadow-blue-500/25 ring-1 ring-white/10 flex-shrink-0 bg-[#070a10]">
+              <img
+                src="/icons/logo.png"
+                alt="Opportunity Radar"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <div className="flex items-center gap-1.5 sm:gap-2">
@@ -129,38 +135,43 @@ export default function Navigation() {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden sm:flex items-center space-x-2">
-            {navLinks.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`px-3 py-2 rounded-xl text-xs font-medium transition flex items-center space-x-2 ${
-                    item.active
-                      ? "bg-white/[0.08] text-white border border-white/[0.1] shadow-sm"
-                      : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]"
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${item.active ? "text-blue-400" : "text-slate-400"}`} />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
+          {/* Right Header Actions (Bell + Desktop Nav Links + Install) */}
+          <div className="flex items-center gap-2">
+            <NotificationBell />
 
-            {/* Desktop Install App Button */}
-            {!isStandalone && isInstallable && (
-              <button
-                onClick={handleInstallClick}
-                className="flex items-center gap-1.5 text-xs font-medium text-slate-200 hover:text-white px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-300 transition shadow-sm shadow-blue-500/10"
-                title="Install Progressive Web App"
-              >
-                <Download className="w-3.5 h-3.5 text-blue-400" />
-                <span>Install App</span>
-              </button>
-            )}
-          </nav>
+            {/* Desktop Navigation Links */}
+            <nav className="hidden sm:flex items-center space-x-2">
+              {navLinks.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`px-3 py-2 rounded-xl text-xs font-medium transition flex items-center space-x-2 ${
+                      item.active
+                        ? "bg-white/[0.08] text-white border border-white/[0.1] shadow-sm"
+                        : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]"
+                    }`}
+                  >
+                    <Icon className={`w-4 h-4 ${item.active ? "text-blue-400" : "text-slate-400"}`} />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+
+              {/* Desktop Install App Button */}
+              {!isStandalone && isInstallable && (
+                <button
+                  onClick={handleInstallClick}
+                  className="flex items-center gap-1.5 text-xs font-medium text-slate-200 hover:text-white px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-300 transition shadow-sm shadow-blue-500/10"
+                  title="Install Progressive Web App"
+                >
+                  <Download className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Install App</span>
+                </button>
+              )}
+            </nav>
+          </div>
         </div>
       </header>
 
