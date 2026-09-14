@@ -1,18 +1,39 @@
 {
-  "name": "Reddit Opportunity Bot",
-  "short_name": "OppBot",
+  "id": "/",
+  "name": "Opportunity Radar — Reddit Freelance Bot",
+  "short_name": "OppRadar",
   "description": "Real-time AI freelance web development opportunity intelligence & instant lead alerts.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#080c14",
-  "theme_color": "#080c14",
   "orientation": "portrait-primary",
+  "background_color": "#070a10",
+  "theme_color": "#070a10",
+  "categories": ["business", "productivity", "utilities"],
   "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "/icons/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }

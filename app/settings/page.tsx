@@ -111,22 +111,22 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
+    <div className="space-y-5 sm:space-y-8 max-w-4xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2.5">
-          <Settings className="w-6 h-6 text-slate-400" />
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+          <Settings className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400" />
           <span>System & Notification Settings</span>
         </h1>
-        <p className="text-slate-400 text-xs mt-1">
+        <p className="text-slate-400 text-xs mt-0.5 sm:mt-1">
           Configure notification alerts, AI models, and autonomous poller parameters.
         </p>
       </div>
 
       {/* Telegram Alerts Setup */}
-      <div className="p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-5">
-        <div className="flex items-center justify-between">
+      <div className="p-4 sm:p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-4 sm:space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-400">
+            <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-400 flex-shrink-0">
               <Send className="w-5 h-5" />
             </div>
             <div>
@@ -134,13 +134,13 @@ export default function SettingsPage() {
                 Telegram Instant Push Alerts
               </h2>
               <p className="text-xs text-slate-400">
-                Receive real-time notifications with direct Reddit links the moment a lead is detected.
+                Receive real-time notifications the moment a lead is detected.
               </p>
             </div>
           </div>
 
           <span
-            className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${
+            className={`text-xs font-semibold px-2.5 py-1 rounded-full border self-start sm:self-auto ${
               settings?.telegramConfigured
                 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
                 : "bg-amber-500/10 text-amber-400 border-amber-500/30"
@@ -150,7 +150,7 @@ export default function SettingsPage() {
           </span>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#070a10] border border-white/[0.06] space-y-2.5 text-xs text-slate-300">
+        <div className="p-3.5 sm:p-4 rounded-xl bg-[#070a10] border border-white/[0.06] space-y-2 text-xs text-slate-300">
           <p className="font-semibold text-slate-200">How to setup Telegram in 60 seconds:</p>
           <ol className="list-decimal list-inside space-y-1 text-slate-400">
             <li>
@@ -163,9 +163,7 @@ export default function SettingsPage() {
               <strong className="text-slate-200">Chat ID</strong>.
             </li>
             <li>
-              Add them to your <code className="text-amber-300">.env</code> file as{" "}
-              <code className="text-slate-200">TELEGRAM_BOT_TOKEN</code> and{" "}
-              <code className="text-slate-200">TELEGRAM_CHAT_ID</code>.
+              Add them to your <code className="text-amber-300">.env</code> file or host environment variables.
             </li>
           </ol>
         </div>
@@ -175,27 +173,27 @@ export default function SettingsPage() {
           <span className="text-xs font-semibold text-slate-300 block">
             Test Your Telegram Alert
           </span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <input
               type="text"
               placeholder="Custom Bot Token (optional if in .env)"
               value={testToken}
               onChange={(e) => setTestToken(e.target.value)}
-              className="bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500"
+              className="bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 min-h-[40px]"
             />
             <input
               type="text"
               placeholder="Custom Chat ID (optional if in .env)"
               value={testChatId}
               onChange={(e) => setTestChatId(e.target.value)}
-              className="bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500"
+              className="bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 min-h-[40px]"
             />
           </div>
 
           <button
             onClick={handleSendTestAlert}
             disabled={sendingTest}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs rounded-xl shadow-sm transition disabled:opacity-50 flex items-center gap-2"
+            className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs rounded-xl shadow-sm transition disabled:opacity-50 flex items-center justify-center gap-2 min-h-[40px]"
           >
             <Send className="w-3.5 h-3.5" />
             <span>{sendingTest ? "Sending..." : "Send Test Telegram Alert"}</span>
@@ -221,10 +219,10 @@ export default function SettingsPage() {
       </div>
 
       {/* Google Gemini AI Mode */}
-      <div className="p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-4">
-        <div className="flex items-center justify-between">
+      <div className="p-4 sm:p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-3 sm:space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-400">
+            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-400 flex-shrink-0">
               <Cpu className="w-5 h-5" />
             </div>
             <div>
@@ -232,30 +230,30 @@ export default function SettingsPage() {
                 Google Gemini AI Intelligence
               </h2>
               <p className="text-xs text-slate-400">
-                Two-stage candidate pipeline for semantic qualification, requirement extraction, and tailored pitch writing.
+                Semantic qualification, requirement extraction, and pitch writing.
               </p>
             </div>
           </div>
 
           <span
-            className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${
+            className={`text-xs font-semibold px-2.5 py-1 rounded-full border self-start sm:self-auto ${
               settings?.geminiConfigured
                 ? "bg-purple-500/10 text-purple-300 border-purple-500/30"
                 : "bg-slate-800 text-slate-400 border-slate-700"
             }`}
           >
             {settings?.geminiConfigured
-              ? "Active (Gemini 2.5 Flash)"
-              : "Rule-Based Heuristics (Zero API Fee)"}
+              ? "Active (Gemini Flash)"
+              : "Rule-Based (Zero API Fee)"}
           </span>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#070a10] border border-white/[0.06] text-xs text-slate-400 leading-relaxed space-y-2">
+        <div className="p-3.5 sm:p-4 rounded-xl bg-[#070a10] border border-white/[0.06] text-xs text-slate-400 leading-relaxed space-y-1.5">
           <p>
-            • <strong className="text-slate-200">Rule-Based Pre-Filter:</strong> Eliminates noise and non-leads locally before invoking AI, keeping you safely under Google free-tier quotas.
+            • <strong className="text-slate-200">Pre-Filter:</strong> Eliminates noise locally before calling AI, keeping usage safely within free tier limits.
           </p>
           <p>
-            • <strong className="text-slate-200">Gemini 2.5 Flash:</strong> Automatically extracts technical requirements, timeline, budget details, and generates tailored outreach messages.
+            • <strong className="text-slate-200">Gemini Flash:</strong> Extracts technical requirements, timeline, budget, and drafts customized outreach pitches.
           </p>
         </div>
       </div>
@@ -263,14 +261,14 @@ export default function SettingsPage() {
       {/* Core Operational Thresholds */}
       <form
         onSubmit={handleSaveSettings}
-        className="p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-4"
+        className="p-4 sm:p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-3.5 sm:space-y-4"
       >
         <span className="text-sm font-bold text-white flex items-center gap-2">
           <Sliders className="w-4 h-4 text-slate-400" />
           <span>Scoring & Poller Thresholds</span>
         </span>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
             <label className="text-[11px] font-semibold text-slate-400 block mb-1">
               Poller Interval (Seconds)
@@ -281,7 +279,7 @@ export default function SettingsPage() {
               max="300"
               value={pollInterval}
               onChange={(e) => setPollInterval(e.target.value)}
-              className="w-full bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+              className="w-full bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500 min-h-[40px]"
             />
             <span className="text-[10px] text-slate-500 mt-1 block">
               Default: 20s
@@ -290,7 +288,7 @@ export default function SettingsPage() {
 
           <div>
             <label className="text-[11px] font-semibold text-slate-400 block mb-1">
-              Min Lead Qualification Score
+              Min Qualification Score
             </label>
             <input
               type="number"
@@ -298,10 +296,10 @@ export default function SettingsPage() {
               max="100"
               value={minOpportunityScore}
               onChange={(e) => setMinOpportunityScore(e.target.value)}
-              className="w-full bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+              className="w-full bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500 min-h-[40px]"
             />
             <span className="text-[10px] text-slate-500 mt-1 block">
-              Score threshold to save to database (Default: 70)
+              Save threshold (Default: 70)
             </span>
           </div>
 
@@ -315,25 +313,25 @@ export default function SettingsPage() {
               max="100"
               value={minNotificationScore}
               onChange={(e) => setMinNotificationScore(e.target.value)}
-              className="w-full bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+              className="w-full bg-[#070a10] border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500 min-h-[40px]"
             />
             <span className="text-[10px] text-slate-500 mt-1 block">
-              Score threshold to dispatch Telegram alert (Default: 75)
+              Alert threshold (Default: 75)
             </span>
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-white/[0.04]">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-2 border-t border-white/[0.04]">
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs rounded-xl shadow-sm transition disabled:opacity-50"
+            className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs rounded-xl shadow-sm transition disabled:opacity-50 min-h-[40px]"
           >
             {saving ? "Saving..." : "Save Configuration"}
           </button>
 
           {saveMessage && (
-            <span className="text-xs text-emerald-400 font-medium">
+            <span className="text-xs text-emerald-400 font-medium text-center sm:text-left">
               {saveMessage}
             </span>
           )}

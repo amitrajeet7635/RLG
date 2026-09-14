@@ -130,25 +130,25 @@ export default function LeadDetailPage() {
   )}...", here are 3 quick architectural tips: 1) ensure responsive mobile layout, 2) optimize page load speed for better SEO, and 3) use a clean headless CMS or modern framework. I would love to build this out for you within your timeline. Feel free to DM or reply if interested!`;
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto">
+    <div className="space-y-4 sm:space-y-8 max-w-5xl mx-auto">
       {/* Top Bar Navigation */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <Link
           href="/"
-          className="flex items-center gap-2 text-xs text-slate-400 hover:text-slate-200 transition"
+          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 transition py-1"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Pipeline Feed</span>
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Pipeline</span>
         </Link>
 
-        {/* Lead Status Pipeline Badges */}
-        <div className="flex items-center gap-1.5 overflow-x-auto">
+        {/* Lead Status Pipeline Badges (Horizontal scroll on mobile) */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
           {["NEW", "REVIEWED", "CONTACTED", "CONVERTED", "IGNORED"].map(
             (st) => (
               <button
                 key={st}
                 onClick={() => handleStatusUpdate(st)}
-                className={`text-[11px] px-3 py-1.5 rounded-xl font-medium transition ${
+                className={`text-[10px] sm:text-[11px] px-2.5 sm:px-3 py-1.5 rounded-xl font-medium transition flex-shrink-0 min-h-[32px] ${
                   lead.status === st
                     ? "bg-blue-600 text-white shadow-sm shadow-blue-500/20"
                     : "bg-[#0b101b] border border-white/[0.06] text-slate-400 hover:text-slate-200"
@@ -162,33 +162,33 @@ export default function LeadDetailPage() {
       </div>
 
       {/* Main Header Card */}
-      <div className="p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold px-3 py-1 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/25 flex items-center gap-1.5">
+      <div className="p-4 sm:p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-3.5 sm:space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <span className="text-xs font-bold px-2.5 py-1 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/25 flex items-center gap-1.5">
               <Target className="w-3.5 h-3.5" />
-              Lead Score: {lead.score}/100
+              Score: {lead.score}/100
             </span>
-            <span className="text-xs font-semibold px-3 py-1 rounded-xl bg-white/[0.04] text-slate-300 border border-white/[0.06]">
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-xl bg-white/[0.04] text-slate-300 border border-white/[0.06]">
               r/{lead.subreddit}
             </span>
-            <span className="text-xs font-semibold px-3 py-1 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               {lead.commercialIntent}
             </span>
-            <span className="text-xs font-medium px-3 py-1 rounded-xl bg-blue-500/10 text-blue-300 border border-blue-500/20">
+            <span className="text-xs font-medium px-2.5 py-1 rounded-xl bg-blue-500/10 text-blue-300 border border-blue-500/20">
               {lead.opportunityType.replace(/_/g, " ")}
             </span>
           </div>
 
           {/* Action Links */}
-          <div className="flex items-center gap-2">
+          <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
             <a
               href={`https://www.reddit.com/message/compose/?to=${encodeURIComponent(
                 lead.author
               )}&subject=${encodeURIComponent("Re: " + lead.title.substring(0, 35))}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs font-semibold text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 px-3.5 py-2 rounded-xl transition"
+              className="flex items-center justify-center gap-1.5 text-xs font-semibold text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 px-3 py-2.5 sm:py-2 rounded-xl transition min-h-[38px]"
             >
               <Send className="w-3.5 h-3.5" />
               <span>DM Author</span>
@@ -198,19 +198,19 @@ export default function LeadDetailPage() {
               href={lead.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-xl shadow-sm shadow-blue-500/20 transition"
+              className="flex items-center justify-center gap-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 px-3 py-2.5 sm:py-2 rounded-xl shadow-sm shadow-blue-500/20 transition min-h-[38px]"
             >
-              <span>Open Exact Post</span>
+              <span>Reddit Post</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
 
-        <h1 className="text-xl font-bold text-white tracking-tight leading-snug">
+        <h1 className="text-base sm:text-xl font-bold text-white tracking-tight leading-snug">
           {lead.title}
         </h1>
 
-        <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-3 border-t border-white/[0.06]">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-slate-400 pt-2.5 border-t border-white/[0.06]">
           <div className="flex items-center gap-1.5">
             <User className="w-3.5 h-3.5 text-slate-500" />
             <span>Author:</span>
@@ -223,17 +223,17 @@ export default function LeadDetailPage() {
               u/{lead.author}
             </a>
           </div>
-          <div>•</div>
+          <span className="text-slate-600">•</span>
           <div className="flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5 text-slate-500" />
             <span>Posted:</span>
             <span className="text-slate-200 font-medium">
-              {new Date(lead.createdAtUtc).toLocaleString()}
+              {new Date(lead.createdAtUtc).toLocaleDateString()}
             </span>
           </div>
           {lead.budget && (
             <>
-              <div>•</div>
+              <span className="text-slate-600">•</span>
               <div className="flex items-center gap-1.5">
                 <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Budget:</span>
@@ -243,7 +243,7 @@ export default function LeadDetailPage() {
           )}
           {lead.timeline && (
             <>
-              <div>•</div>
+              <span className="text-slate-600">•</span>
               <div>
                 <span>Timeline:</span>{" "}
                 <span className="text-amber-400 font-semibold">{lead.timeline}</span>
@@ -253,11 +253,11 @@ export default function LeadDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Left: Intelligence Breakdown & Post Body */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* AI Intelligence Card */}
-          <div className="p-6 rounded-2xl bg-[#0b101b] border border-blue-500/20 space-y-4">
+          <div className="p-4 sm:p-6 rounded-2xl bg-[#0b101b] border border-blue-500/20 space-y-3.5 sm:space-y-4">
             <div className="flex items-center gap-2 text-xs font-bold text-blue-400 uppercase tracking-wider">
               <Cpu className="w-4 h-4 text-blue-400" />
               <span>AI Lead Intelligence Analysis</span>
@@ -268,8 +268,8 @@ export default function LeadDetailPage() {
             </p>
 
             {requirementsList.length > 0 && (
-              <div className="space-y-2 pt-2">
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+              <div className="space-y-2 pt-1">
+                <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                   Extracted Requirements
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -279,7 +279,7 @@ export default function LeadDetailPage() {
                       className="p-2.5 rounded-xl bg-[#070a10] border border-white/[0.06] text-xs text-slate-300 flex items-center gap-2"
                     >
                       <CheckCircle className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
-                      <span>{req}</span>
+                      <span className="leading-snug">{req}</span>
                     </div>
                   ))}
                 </div>
@@ -287,11 +287,11 @@ export default function LeadDetailPage() {
             )}
 
             {techList.length > 0 && (
-              <div className="space-y-2 pt-2">
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+              <div className="space-y-2 pt-1">
+                <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                   Detected Technologies
                 </span>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {techList.map((t) => (
                     <span
                       key={t}
@@ -306,40 +306,40 @@ export default function LeadDetailPage() {
           </div>
 
           {/* Original Reddit Post Body */}
-          <div className="p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-3">
+          <div className="p-4 sm:p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-3">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-wider">
               <FileText className="w-4 h-4 text-slate-400" />
               <span>Original Reddit Post Body</span>
             </div>
-            <div className="p-4 rounded-xl bg-[#070a10] border border-white/[0.06] text-xs text-slate-300 leading-relaxed whitespace-pre-wrap font-sans max-h-96 overflow-y-auto">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-[#070a10] border border-white/[0.06] text-xs text-slate-300 leading-relaxed whitespace-pre-wrap font-sans max-h-80 sm:max-h-96 overflow-y-auto">
               {lead.body || "(No selftext body provided in this post)"}
             </div>
           </div>
         </div>
 
         {/* Right: Outreach Assistant & Notes */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Outreach Pitches */}
-          <div className="p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-4">
+          <div className="p-4 sm:p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-3.5 sm:space-y-4">
             <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider">
               <MessageSquare className="w-4 h-4" />
               <span>Suggested Outreach Pitches</span>
             </div>
             <p className="text-[11px] text-slate-400">
-              One-click copy and manually send via Reddit DM or comment. Never automated.
+              One-click copy and manually send via Reddit DM or comment.
             </p>
 
             {/* Pitch 1: Tailored DM */}
             <div className="p-3.5 rounded-xl bg-[#070a10] border border-white/[0.06] space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-blue-400">
-                  Tailored Direct Message (DM)
+                  Tailored Direct Message
                 </span>
                 <button
                   onClick={() =>
                     handleCopy(lead.outreachPitch || casualCommentPitch, "dm")
                   }
-                  className="p-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 transition flex items-center gap-1 text-xs"
+                  className="p-1.5 px-2.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 transition flex items-center gap-1 text-xs min-h-[32px]"
                 >
                   {copiedType === "dm" ? (
                     <>
@@ -367,7 +367,7 @@ export default function LeadDetailPage() {
                 </span>
                 <button
                   onClick={() => handleCopy(casualCommentPitch, "comment")}
-                  className="p-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 transition flex items-center gap-1 text-xs"
+                  className="p-1.5 px-2.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 transition flex items-center gap-1 text-xs min-h-[32px]"
                 >
                   {copiedType === "comment" ? (
                     <>
@@ -395,7 +395,7 @@ export default function LeadDetailPage() {
                 </span>
                 <button
                   onClick={() => handleCopy(valueFirstPitch, "value")}
-                  className="p-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 transition flex items-center gap-1 text-xs"
+                  className="p-1.5 px-2.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 transition flex items-center gap-1 text-xs min-h-[32px]"
                 >
                   {copiedType === "value" ? (
                     <>
@@ -417,7 +417,7 @@ export default function LeadDetailPage() {
           </div>
 
           {/* Lead Notes */}
-          <div className="p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-3">
+          <div className="p-4 sm:p-6 rounded-2xl bg-[#0b101b] border border-white/[0.06] space-y-3">
             <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
               Internal Deal Notes
             </span>
@@ -431,7 +431,7 @@ export default function LeadDetailPage() {
             <button
               onClick={handleSaveNotes}
               disabled={savingNotes}
-              className="w-full py-2 bg-white/[0.05] hover:bg-white/[0.1] text-slate-200 font-medium text-xs rounded-xl border border-white/[0.06] transition flex items-center justify-center gap-2"
+              className="w-full py-2.5 bg-white/[0.05] hover:bg-white/[0.1] text-slate-200 font-medium text-xs rounded-xl border border-white/[0.06] transition flex items-center justify-center gap-2 min-h-[40px]"
             >
               {notesSaved ? (
                 <>

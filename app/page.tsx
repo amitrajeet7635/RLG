@@ -19,6 +19,7 @@ import {
   Activity,
   Layers,
   ArrowUpRight,
+  Filter,
 } from "lucide-react";
 
 interface Lead {
@@ -130,9 +131,9 @@ export default function DashboardPage() {
   });
 
   const getScoreColor = (score: number) => {
-    if (score >= 90) return "bg-rose-500/10 text-rose-400 border-rose-500/25";
-    if (score >= 80) return "bg-amber-500/10 text-amber-400 border-amber-500/25";
-    return "bg-blue-500/10 text-blue-400 border-blue-500/25";
+    if (score >= 90) return "bg-rose-500/15 text-rose-400 border-rose-500/30";
+    if (score >= 80) return "bg-amber-500/15 text-amber-400 border-amber-500/30";
+    return "bg-blue-500/15 text-blue-400 border-blue-500/30";
   };
 
   const getIntentBadge = (intent: string) => {
@@ -162,107 +163,105 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 sm:space-y-8">
       {/* Header & Quick Action */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2.5">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
             <span>Opportunity Pipeline</span>
-            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-white/[0.05] text-slate-400 border border-white/[0.08]">
-              {leads.length} Leads Tracked
+            <span className="text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md bg-white/[0.05] text-slate-400 border border-white/[0.08]">
+              {leads.length} Leads
             </span>
           </h1>
-          <p className="text-slate-400 text-xs mt-1">
-            Real-time qualified web development gigs qualified by Gemini AI & instant lead radar.
+          <p className="text-slate-400 text-xs mt-0.5 sm:mt-1">
+            Real-time qualified web development opportunities from Reddit.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button
-            onClick={handlePollNow}
-            disabled={polling}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs shadow-lg shadow-blue-500/20 transition disabled:opacity-50"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${polling ? "animate-spin" : ""}`} />
-            <span>{polling ? "Scanning Reddit..." : "Poll Reddit Now"}</span>
-          </button>
-        </div>
+        <button
+          onClick={handlePollNow}
+          disabled={polling}
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-medium text-xs shadow-lg shadow-blue-500/20 transition disabled:opacity-50 min-h-[42px] sm:min-h-[36px]"
+        >
+          <RefreshCw className={`w-3.5 h-3.5 ${polling ? "animate-spin" : ""}`} />
+          <span>{polling ? "Scanning Reddit..." : "Poll Reddit Now"}</span>
+        </button>
       </div>
 
       {pollStatusText && (
-        <div className="p-3.5 rounded-xl bg-blue-950/30 border border-blue-800/40 text-blue-200 text-xs flex items-center gap-2.5 animate-fadeIn">
+        <div className="p-3 sm:p-3.5 rounded-xl bg-blue-950/40 border border-blue-800/40 text-blue-200 text-xs flex items-center gap-2.5 animate-fadeIn">
           <Activity className="w-4 h-4 text-blue-400 flex-shrink-0" />
-          <span>{pollStatusText}</span>
+          <span className="leading-snug">{pollStatusText}</span>
         </div>
       )}
 
-      {/* Sleek Minimal Metric Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <div className="p-4 rounded-2xl bg-[#0b101b] border border-white/[0.06] relative overflow-hidden">
+      {/* Responsive Metric Cards (2x2 on mobile, 4 columns on large) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
+        <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#0b101b] border border-white/[0.06] relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-slate-400">
               Total Ingested
             </span>
-            <div className="p-1.5 rounded-lg bg-blue-500/10 text-blue-400">
-              <Layers className="w-3.5 h-3.5" />
+            <div className="p-1 sm:p-1.5 rounded-lg bg-blue-500/10 text-blue-400">
+              <Layers className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
             </div>
           </div>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-white">{countAll}</span>
-            <span className="text-[11px] text-slate-500">leads</span>
+          <div className="mt-1.5 sm:mt-2 flex items-baseline gap-1.5">
+            <span className="text-xl sm:text-2xl font-bold text-white">{countAll}</span>
+            <span className="text-[10px] sm:text-[11px] text-slate-500">leads</span>
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0b101b] border border-white/[0.06] relative overflow-hidden">
+        <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#0b101b] border border-white/[0.06] relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-rose-400">
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-rose-400">
               Critical (90+)
             </span>
-            <div className="p-1.5 rounded-lg bg-rose-500/10 text-rose-400">
-              <Flame className="w-3.5 h-3.5" />
+            <div className="p-1 sm:p-1.5 rounded-lg bg-rose-500/10 text-rose-400">
+              <Flame className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
             </div>
           </div>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-rose-400">{countCritical}</span>
-            <span className="text-[11px] text-slate-500">immediate action</span>
+          <div className="mt-1.5 sm:mt-2 flex items-baseline gap-1.5">
+            <span className="text-xl sm:text-2xl font-bold text-rose-400">{countCritical}</span>
+            <span className="text-[10px] sm:text-[11px] text-slate-500">urgent</span>
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0b101b] border border-white/[0.06] relative overflow-hidden">
+        <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#0b101b] border border-white/[0.06] relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
-              Paid Opportunities
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
+              Paid Gigs
             </span>
-            <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
-              <DollarSign className="w-3.5 h-3.5" />
+            <div className="p-1 sm:p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
+              <DollarSign className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
             </div>
           </div>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-emerald-400">{countPaid}</span>
-            <span className="text-[11px] text-slate-500">budget specified</span>
+          <div className="mt-1.5 sm:mt-2 flex items-baseline gap-1.5">
+            <span className="text-xl sm:text-2xl font-bold text-emerald-400">{countPaid}</span>
+            <span className="text-[10px] sm:text-[11px] text-slate-500">budgeted</span>
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0b101b] border border-white/[0.06] relative overflow-hidden">
+        <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#0b101b] border border-white/[0.06] relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">
-              Contacted / Converted
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-indigo-400">
+              In Contact
             </span>
-            <div className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400">
-              <CheckCircle2 className="w-3.5 h-3.5" />
+            <div className="p-1 sm:p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400">
+              <CheckCircle2 className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
             </div>
           </div>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-indigo-400">
+          <div className="mt-1.5 sm:mt-2 flex items-baseline gap-1.5">
+            <span className="text-xl sm:text-2xl font-bold text-indigo-400">
               {countContacted + countConverted}
             </span>
-            <span className="text-[11px] text-slate-500">in conversation</span>
+            <span className="text-[10px] sm:text-[11px] text-slate-500">active</span>
           </div>
         </div>
       </div>
 
-      {/* Advanced Pipeline Tabs */}
-      <div className="border-b border-white/[0.06] flex items-center space-x-2 overflow-x-auto pb-1">
+      {/* Smooth Horizontal Pipeline Tabs */}
+      <div className="border-b border-white/[0.06] flex items-center space-x-1.5 overflow-x-auto pb-2 scrollbar-none">
         {[
           { key: "ALL", label: "All Leads", count: countAll },
           { key: "NEW", label: "New Inbox", count: countNew },
@@ -273,15 +272,15 @@ export default function DashboardPage() {
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`px-3.5 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2 flex-shrink-0 ${
+            className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-medium transition flex items-center gap-1.5 sm:gap-2 flex-shrink-0 min-h-[36px] ${
               activeTab === tab.key
-                ? "bg-white/[0.08] text-white border border-white/[0.1]"
+                ? "bg-white/[0.08] text-white border border-white/[0.1] shadow-sm"
                 : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.02]"
             }`}
           >
             <span>{tab.label}</span>
             <span
-              className={`text-[10px] px-1.5 py-0.2 rounded-md ${
+              className={`text-[10px] px-1.5 py-0.5 rounded-md ${
                 activeTab === tab.key
                   ? "bg-blue-500/20 text-blue-300 font-bold"
                   : "bg-slate-800/80 text-slate-400"
@@ -294,63 +293,63 @@ export default function DashboardPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-3 rounded-2xl bg-[#0b101b] border border-white/[0.06] flex flex-col md:flex-row gap-3 items-center justify-between">
-        {/* Search */}
+      <div className="p-3 sm:p-3.5 rounded-2xl bg-[#0b101b] border border-white/[0.06] flex flex-col md:flex-row gap-2.5 sm:gap-3 items-stretch md:items-center justify-between">
+        {/* Search Input */}
         <div className="relative w-full md:w-80">
-          <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
+          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
           <input
             type="text"
             placeholder="Search keywords, tech, author..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-8 pr-4 py-1.5 bg-[#070a10] border border-white/[0.08] rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition"
+            className="w-full pl-9 pr-4 py-2 bg-[#070a10] border border-white/[0.08] rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition min-h-[40px]"
           />
         </div>
 
-        {/* Dropdowns */}
-        <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+        {/* Dropdowns in 2-column grid on mobile, row on desktop */}
+        <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full md:w-auto">
           {/* Intent Filter */}
           <select
             value={intentFilter}
             onChange={(e) => setIntentFilter(e.target.value)}
-            className="bg-[#070a10] border border-white/[0.08] text-slate-300 text-xs px-3 py-1.5 rounded-xl focus:outline-none focus:border-blue-500"
+            className="w-full sm:w-auto bg-[#070a10] border border-white/[0.08] text-slate-300 text-xs px-2.5 sm:px-3 py-2 rounded-xl focus:outline-none focus:border-blue-500 min-h-[40px]"
           >
-            <option value="ALL">All Commercial Intent</option>
-            <option value="PAID">Paid Budget Only</option>
+            <option value="ALL">All Intent</option>
+            <option value="PAID">Paid Only</option>
             <option value="FREE">Free / Portfolio</option>
             <option value="EQUITY">Equity</option>
-            <option value="COLLABORATION">Collaboration</option>
+            <option value="COLLABORATION">Collab</option>
           </select>
 
           {/* Min Score */}
           <select
             value={minScore}
             onChange={(e) => setMinScore(e.target.value)}
-            className="bg-[#070a10] border border-white/[0.08] text-slate-300 text-xs px-3 py-1.5 rounded-xl focus:outline-none focus:border-blue-500"
+            className="w-full sm:w-auto bg-[#070a10] border border-white/[0.08] text-slate-300 text-xs px-2.5 sm:px-3 py-2 rounded-xl focus:outline-none focus:border-blue-500 min-h-[40px]"
           >
             <option value="0">Score: Any</option>
             <option value="70">Score: 70+ (Qualified)</option>
-            <option value="80">Score: 80+ (High Intent)</option>
+            <option value="80">Score: 80+ (High)</option>
             <option value="90">Score: 90+ (Critical)</option>
           </select>
         </div>
       </div>
 
       {/* Leads Feed List */}
-      <div className="space-y-3">
+      <div className="space-y-3 sm:space-y-3.5">
         {loading ? (
-          <div className="py-20 text-center text-slate-500 text-xs">
+          <div className="py-16 sm:py-20 text-center text-slate-500 text-xs">
             <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2 text-blue-500" />
             Loading real-time lead pipeline...
           </div>
         ) : filteredLeads.length === 0 ? (
-          <div className="py-20 text-center rounded-2xl bg-[#0b101b] border border-dashed border-white/[0.08] p-8">
+          <div className="py-16 sm:py-20 text-center rounded-2xl bg-[#0b101b] border border-dashed border-white/[0.08] p-6 sm:p-8">
             <AlertCircle className="w-8 h-8 mx-auto text-slate-600 mb-2" />
             <h3 className="text-sm font-semibold text-slate-300">
               No leads match your current filter
             </h3>
             <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-              Click &quot;Poll Reddit Now&quot; to fetch the latest opportunities or reset your filter tabs.
+              Click &quot;Poll Reddit Now&quot; to fetch the latest opportunities or reset your search filters.
             </p>
           </div>
         ) : (
@@ -362,29 +361,29 @@ export default function DashboardPage() {
             return (
               <div
                 key={lead.id}
-                className="p-5 rounded-2xl bg-[#0b101b] hover:bg-[#0e1422] border border-white/[0.06] hover:border-white/[0.1] transition space-y-3.5"
+                className="p-4 sm:p-5 rounded-2xl bg-[#0b101b] hover:bg-[#0e1422] border border-white/[0.06] hover:border-white/[0.1] transition space-y-3"
               >
-                {/* Header row */}
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex flex-wrap items-center gap-2">
+                {/* Header row: Badges and Timestamps */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                     {/* Score Badge */}
                     <span
-                      className={`text-xs font-bold px-2.5 py-0.5 rounded-lg border ${getScoreColor(
+                      className={`text-xs font-bold px-2 py-0.5 rounded-lg border ${getScoreColor(
                         lead.score
-                      )} flex items-center gap-1.5`}
+                      )} flex items-center gap-1`}
                     >
                       <Target className="w-3.5 h-3.5" />
-                      <span>{lead.score}/100</span>
+                      <span>{lead.score}</span>
                     </span>
 
                     {/* Subreddit */}
-                    <span className="text-xs font-medium px-2.5 py-0.5 rounded-lg bg-white/[0.04] text-slate-300 border border-white/[0.06]">
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-lg bg-white/[0.04] text-slate-300 border border-white/[0.06]">
                       r/{lead.subreddit}
                     </span>
 
                     {/* Commercial Intent */}
                     <span
-                      className={`text-[11px] font-semibold px-2 py-0.5 rounded-lg border ${getIntentBadge(
+                      className={`text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-lg border ${getIntentBadge(
                         lead.commercialIntent
                       )}`}
                     >
@@ -392,14 +391,15 @@ export default function DashboardPage() {
                     </span>
 
                     {/* Opportunity Type */}
-                    <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/20">
+                    <span className="text-[10px] sm:text-[11px] font-medium px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/20">
                       {lead.opportunityType.replace(/_/g, " ")}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
+                  {/* Author & Time */}
+                  <div className="flex items-center gap-2 text-[11px] sm:text-xs text-slate-500">
                     <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
+                      <Clock className="w-3 h-3 text-slate-500" />
                       {formatTimeAgo(lead.createdAtUtc)}
                     </span>
                     <span>•</span>
@@ -407,7 +407,7 @@ export default function DashboardPage() {
                       href={`https://www.reddit.com/user/${lead.author}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-slate-400 hover:text-white transition"
+                      className="text-slate-400 hover:text-white transition truncate max-w-[120px]"
                     >
                       u/{lead.author}
                     </a>
@@ -418,7 +418,7 @@ export default function DashboardPage() {
                 <div>
                   <Link
                     href={`/leads/${lead.id}`}
-                    className="text-base font-semibold text-slate-100 hover:text-blue-400 transition leading-snug block"
+                    className="text-sm sm:text-base font-semibold text-slate-100 hover:text-blue-400 transition leading-snug block"
                   >
                     {lead.title}
                   </Link>
@@ -429,34 +429,40 @@ export default function DashboardPage() {
                   )}
                 </div>
 
-                {/* Details, Tech & Actions */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/[0.04]">
-                  <div className="flex flex-wrap items-center gap-2">
+                {/* Bottom Row: Budget/Tech + Responsive Action Bar */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2.5 border-t border-white/[0.04]">
+                  {/* Budget & Technologies */}
+                  <div className="flex flex-wrap items-center gap-1.5">
                     {lead.budget && (
                       <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
-                        Budget: {lead.budget}
+                        {lead.budget}
                       </span>
                     )}
 
-                    {techList.map((t) => (
+                    {techList.slice(0, 4).map((t) => (
                       <span
                         key={t}
-                        className="text-[11px] text-slate-400 bg-white/[0.04] px-2 py-0.5 rounded-md border border-white/[0.04]"
+                        className="text-[10px] sm:text-[11px] text-slate-400 bg-white/[0.04] px-1.5 py-0.5 rounded-md border border-white/[0.04]"
                       >
                         {t}
                       </span>
                     ))}
+                    {techList.length > 4 && (
+                      <span className="text-[10px] text-slate-500">
+                        +{techList.length - 4}
+                      </span>
+                    )}
                   </div>
 
-                  {/* Actions */}
-                  <div className="flex items-center gap-2">
+                  {/* Actions (Touch targets >= 38px) */}
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
                     {/* Status Dropdown */}
                     <select
                       value={lead.status}
                       onChange={(e) =>
                         handleStatusChange(lead.id, e.target.value)
                       }
-                      className="text-xs bg-[#070a10] border border-white/[0.08] text-slate-300 px-2.5 py-1.5 rounded-xl focus:outline-none"
+                      className="flex-1 sm:flex-initial text-xs bg-[#070a10] border border-white/[0.08] text-slate-300 px-2.5 py-2 sm:py-1.5 rounded-xl focus:outline-none min-h-[38px]"
                     >
                       <option value="NEW">New</option>
                       <option value="REVIEWED">Reviewed</option>
@@ -474,7 +480,7 @@ export default function DashboardPage() {
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/20 transition"
+                      className="p-2 sm:p-2 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/20 transition min-w-[38px] min-h-[38px] flex items-center justify-center"
                       title="Direct Message Author on Reddit"
                     >
                       <Send className="w-3.5 h-3.5" />
@@ -485,7 +491,7 @@ export default function DashboardPage() {
                       href={lead.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white border border-white/[0.06] transition"
+                      className="p-2 sm:p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white border border-white/[0.06] transition min-w-[38px] min-h-[38px] flex items-center justify-center"
                       title="Open Exact Reddit Post"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -494,9 +500,9 @@ export default function DashboardPage() {
                     {/* View Details */}
                     <Link
                       href={`/leads/${lead.id}`}
-                      className="flex items-center gap-1 text-xs font-semibold text-white px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 transition shadow-sm shadow-blue-500/20"
+                      className="flex-1 sm:flex-initial flex items-center justify-center gap-1 text-xs font-semibold text-white px-3 py-2 sm:py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 transition shadow-sm shadow-blue-500/20 min-h-[38px]"
                     >
-                      <span>Review & Pitch</span>
+                      <span>Review</span>
                       <ChevronRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
