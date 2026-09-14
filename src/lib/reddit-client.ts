@@ -127,7 +127,7 @@ export class RedditClient {
     const activeSubs = subreddits.filter((s) => s.toLowerCase() !== "freelance_forhire");
 
     const limit = Math.min(Math.max(env.POSTS_PER_SUBREDDIT, 1), 50);
-    for (const sub of activeSubs) {
+    const subFetchPromises = activeSubs.map(async (sub) => {
       try {
         const res = await fetch(
           `https://arctic-shift.photon-reddit.com/api/posts/search?subreddit=${encodeURIComponent(
@@ -138,19 +138,21 @@ export class RedditClient {
               "User-Agent":
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)",
             },
+            signal: AbortSignal.timeout(8000),
           }
         );
 
         if (res.ok) {
           const json = await res.json();
           const items = json.data || [];
+          const posts: RawRedditPost[] = [];
           for (const d of items) {
             if (!d.author || d.author === "[deleted]" || d.author === "AutoModerator") {
               continue;
             }
 
             const permalink = d.permalink || `/r/${d.subreddit}/comments/${d.id}/`;
-            allPosts.push({
+            posts.push({
               id: d.id.startsWith("t3_") ? d.id : `t3_${d.id}`,
               subreddit: d.subreddit,
               author: d.author,
@@ -162,9 +164,18 @@ export class RedditClient {
               numComments: d.num_comments || 0,
             });
           }
+          return posts;
         }
       } catch (err) {
-        // Continue to next subreddit if one fails
+        // Subreddit timeout or fetch error - continue
+      }
+      return [];
+    });
+
+    const results = await Promise.allSettled(subFetchPromises);
+    for (const r of results) {
+      if (r.status === "fulfilled") {
+        allPosts.push(...r.value);
       }
     }
 

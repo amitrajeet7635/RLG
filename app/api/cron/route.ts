@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { pollerService } from "@/src/services/poller-service";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60; // Allow up to 60s for external Reddit fetching and AI processing
 
 export async function GET(req: NextRequest) {
   // Optional security check for Vercel Cron or external cron secret
