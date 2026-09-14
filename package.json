@@ -2,6 +2,7 @@
   "name": "reddit-freelance-opportunity-bot",
   "version": "1.0.0",
   "description": "Real-time AI & Heuristic Reddit Web Development Opportunity Intelligence and Instant Lead Alert Bot.",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
